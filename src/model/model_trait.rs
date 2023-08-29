@@ -5,5 +5,7 @@ pub(crate) trait Model {
 
     fn num_guesses_remaining(&self) -> u32;
 
-    fn reset(&mut self, secret_number: u32);
+    fn reset(&mut self);
+
+    fn secret_number(&self) -> u32;
 }

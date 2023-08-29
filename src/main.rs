@@ -11,7 +11,7 @@ use crate::view::ConsoleView;
 fn main() {
     let game_components = (
         &ConsoleView::new(),
-        &mut GameModel::new(10),
+        &mut GameModel::new(),
         &KeyboardController::new(),
     );
 

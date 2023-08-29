@@ -23,7 +23,7 @@ impl View for ConsoleView {
 
     fn display_status(&self, guesses_remaining: u32) {
         println!("You have {guesses_remaining} guesses remaining this round.");
-        println!("Guess the number!");
+        println!("Guess the number, it is in the range [1, 100].");
     }
 
     fn display_result(&self, guess: &str, correct: bool) {
@@ -34,8 +34,14 @@ impl View for ConsoleView {
         }
     }
 
-    fn display_inter_round(&self) {
+    fn display_begin_round(&self) {
         println!("The round begins now.");
+    }
+
+    fn display_end_round(&self, guessed_correctly: bool, secret_number: u32) {
+        if !guessed_correctly {
+            println!("You didn't win this round, the secret number was {secret_number}");
+        }
     }
 
     fn display_exit(&self) {

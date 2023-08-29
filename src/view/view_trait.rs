@@ -9,7 +9,9 @@ pub(crate) trait View {
 
     fn display_result(&self, guess: &str, correct: bool);
 
-    fn display_inter_round(&self);
+    fn display_begin_round(&self);
+
+    fn display_end_round(&self, guessed_correctly: bool, secret_number: u32);
 
     fn display_exit(&self);
 }

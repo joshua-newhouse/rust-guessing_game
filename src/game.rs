@@ -29,33 +29,31 @@ impl<'a> Game<'a> {
 
         // loop until user quits
         while !quit {
-            self.view.display_inter_round();
+            self.view.display_begin_round();
 
             // loop until round ends
             let mut round_in_progress = true;
             while round_in_progress {
                 self.view.display_status(self.model.num_guesses_remaining());
 
-                let guess: String;
-                match self.controller.receive_user_input() {
-                    Ok(input) => guess = input,
+                let guess: String = match self.controller.receive_user_input() {
+                    Ok(input) => input,
                     Err(e) => {
                         println!("Failed getting input; terminating\n{e}");
                         exit(1);
                     }
-                }
+                };
 
                 if guess.eq_ignore_ascii_case("q") {
                     quit = true;
                     break;
                 }
 
-                let mut is_correct = false;
-                match guess.parse::<u32>() {
-                    Ok(number) => is_correct = self.model.check_guess(number),
+                let is_correct = match guess.parse::<u32>() {
+                    Ok(number) => self.model.check_guess(number),
                     Err(e) => {
                         self.view.display_input_format_error(e);
-                        self.model.check_guess(0);
+                        self.model.check_guess(0)
                     }
                 };
 
@@ -64,7 +62,9 @@ impl<'a> Game<'a> {
                 round_in_progress = !is_correct && self.model.guesses_remaining();
             }
 
-            self.model.reset(99);
+            self.view
+                .display_end_round(self.model.guesses_remaining(), self.model.secret_number());
+            self.model.reset();
         }
 
         self.view.display_exit();
