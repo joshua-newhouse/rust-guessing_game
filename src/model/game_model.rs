@@ -1,5 +1,6 @@
 use crate::model::Model;
 use rand::Rng;
+use std::cmp::Ordering;
 
 pub(crate) struct GameModel {
     guesses_remaining: u32,
@@ -9,16 +10,16 @@ pub(crate) struct GameModel {
 impl GameModel {
     pub fn new() -> GameModel {
         GameModel {
-            guesses_remaining: 10,
+            guesses_remaining: 5,
             secret_number: rand::thread_rng().gen_range(1..=100),
         }
     }
 }
 
 impl Model for GameModel {
-    fn check_guess(&mut self, guess: u32) -> bool {
+    fn check_guess(&mut self, guess: u32) -> Ordering {
         self.guesses_remaining -= 1;
-        self.secret_number.eq(&guess)
+        guess.cmp(&self.secret_number)
     }
 
     fn guesses_remaining(&self) -> bool {
@@ -38,5 +39,9 @@ impl Model for GameModel {
 
     fn secret_number(&self) -> u32 {
         self.secret_number
+    }
+
+    fn decrement_guesses_remaining(&mut self) {
+        self.guesses_remaining -= 1;
     }
 }

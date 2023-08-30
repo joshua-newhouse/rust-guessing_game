@@ -7,7 +7,11 @@ pub(crate) trait View {
 
     fn display_status(&self, guesses_remaining: u32);
 
-    fn display_result(&self, guess: &str, correct: bool);
+    fn display_low_guess(&self);
+
+    fn display_correct_guess(&self);
+
+    fn display_high_guess(&self);
 
     fn display_begin_round(&self);
 

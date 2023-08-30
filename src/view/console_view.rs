@@ -26,12 +26,16 @@ impl View for ConsoleView {
         println!("Guess the number, it is in the range [1, 100].");
     }
 
-    fn display_result(&self, guess: &str, correct: bool) {
-        if correct {
-            println!("Congratulations, {guess} was the secret number!");
-        } else {
-            println!("{guess} is not the secret number.")
-        }
+    fn display_low_guess(&self) {
+        println!("Your guess was too low, try a higher number.");
+    }
+
+    fn display_correct_guess(&self) {
+        println!("Congratulations, you correctly guessed the secret number!");
+    }
+
+    fn display_high_guess(&self) {
+        println!("Your guess was too high, try a lower number.");
     }
 
     fn display_begin_round(&self) {
